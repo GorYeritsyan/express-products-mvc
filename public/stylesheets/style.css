@@ -52,7 +52,8 @@ header ul {
   flex-direction: column;
   gap: 16px;
   margin-top: 20px;
-  max-width: 360px;
+  min-width: 360px;
+
 }
 
 .form .input-wrapper {
@@ -87,4 +88,25 @@ input, select {
 input:focus, select:focus {
   border-color: #2098f4;
   outline: 1px solid #2098f4;
+}
+
+section .container{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+section .container ul{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+section .container ul li{
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }

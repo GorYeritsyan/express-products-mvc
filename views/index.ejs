@@ -17,8 +17,14 @@
             <p>Title: <%= product.title %></p>
             <p>Price: $<%= product.price %></p>
             <p>Category: <%=product.category %></p>
-            <a href="/products/<%=product.id %>"><img width="60" src="<%=product.image %>" alt="" /></a>
-            <button id="<%=product.id%>" data-action="add-to-cart">Add to cart</button>
+            <p>
+              <a href="/products/<%=product.id %>"
+                ><img width="60" src="<%=product.image %>" alt=""
+              /></a>
+            </p>
+            <button id="<%=product.id%>" data-action="add-to-cart">
+              Add to cart
+            </button>
             <a href="/products/edit/<%=product.id%>">Edit</a>
             <button id="<%=product.id %>" data-action="delete">Delete</button>
           </li>
