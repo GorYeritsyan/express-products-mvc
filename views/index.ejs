@@ -5,21 +5,27 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
+    <%-include('header') %>
+    <section>
+      <div class="container">
+        <h1><%= title %></h1>
 
-    <ul>
-      <% products.forEach(product => { %>
-      <li>
-        <p>ID: <%=product.id%></p>
-        <p>Title: <%= product.title %></p>
-        <p>Price: <%= product.title %></p>
-        <p>Category: <%=product.category %></p>
-        <p><img width="60" src="<%=product.image %>" alt="" /></p>
-        <button>Add to cart</button>
-        <button id="<%=product.id %>" data-action="delete">Delete</button>
-      </li>
-      <% }) %>
-    </ul>
+        <ul>
+          <% products.forEach(product => { %>
+          <li>
+            <p>ID: <%=product.id%></p>
+            <p>Title: <%= product.title %></p>
+            <p>Price: $<%= product.price %></p>
+            <p>Category: <%=product.category %></p>
+            <a href="/products/<%=product.id %>"><img width="60" src="<%=product.image %>" alt="" /></a>
+            <button id="<%=product.id%>" data-action="add-to-cart">Add to cart</button>
+            <a href="/products/edit/<%=product.id%>">Edit</a>
+            <button id="<%=product.id %>" data-action="delete">Delete</button>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
 
     <script src="/javascripts/index.js"></script>
   </body>

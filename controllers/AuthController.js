@@ -2,11 +2,23 @@ const { registerSchema, loginSchema } = require("../validations/validations");
 
 class AuthController {
   async getLogin(req, res) {
-    res.render("login", { title: "Login" });
+    const authUser = await req.app.locals.services.auth.getMe();
+
+    if (authUser) {
+      res.redirect("/");
+      return;
+    }
+
+    res.render("login", { title: "Login", authUser: null });
   }
 
   async getRegister(req, res) {
-    res.render("register", { title: "Register" });
+    const authUser = await req.app.locals.services.auth.getMe();
+    if (authUser) {
+      res.redirect("/");
+      return;
+    }
+    res.render("register", { title: "Register", authUser: null });
   }
 
   async login(req, res) {

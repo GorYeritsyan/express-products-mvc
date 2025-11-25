@@ -6,11 +6,13 @@ var logger = require("morgan");
 // Importing services
 const ProductService = require("./services/ProductService");
 const UserService = require("./services/UserService");
+const AuthService = require("./services/AuthService");
+const CartService = require("./services/CartService");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
-const AuthService = require("./services/AuthService");
+const cartRouter = require("./routes/cart");
 
 var app = express();
 
@@ -18,6 +20,7 @@ app.locals.services = {
   products: new ProductService(),
   users: new UserService(),
   auth: new AuthService(),
+  cart: new CartService(),
 };
 
 // view engine setup
@@ -33,6 +36,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+app.use("/cart", cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

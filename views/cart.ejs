@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <%-include('header') %>
+    <section>
+      <div class="container">
+        <h1><%= title %></h1>
+
+        <ul>
+          <% cartItems.forEach(item => { %>
+          <li>
+            <p>Product ID: <%=item.id%></p>
+            <p>Title: <%= item.title %></p>
+            <p>Price: $<%= item.price %></p>
+            <p>Category: <%= item.category %></p>
+            <a href="/products/<%=item.id %>"
+              ><img width="60" src="<%=item.image %>" alt=""
+            /></a>
+
+            <button id="<%=item.id %>" data-action="remove-from-cart">
+              Remove
+            </button>
+          </li>
+
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+
+    <script src="/javascripts/index.js"></script>
+  </body>
+</html>

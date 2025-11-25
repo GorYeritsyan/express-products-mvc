@@ -1,8 +1,9 @@
 [
   {
-    "name": "John",
-    "email": "john@gmail.com",
-    "password": "$2b$10$s8axi/tLEOhWN0kXrGJ2y.AZQiyYg9RCb.O1a7zQc6o2ZfNPArdPS",
-    "id": "edfcd283-2e3e-42fa-85f9-dd65020981ff"
+    "name": "Admin",
+    "email": "admin@gmail.com",
+    "password": "$2b$10$IyCHh4lTsug5VCRcsm1IfOoHbpaPEHhtqseXzd9T6hssQEGYg1/xu",
+    "role": "admin",
+    "id": "821a257d-2260-4d3d-9a32-da8b0a30027e"
   }
 ]

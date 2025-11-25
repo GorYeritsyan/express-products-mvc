@@ -8,6 +8,7 @@ const registerSchema = joi.object({
     .pattern(/^[a-zA-Z0-9]{3,30}$/)
     .required(),
   confirm_password: joi.ref("password"),
+  role: joi.string().valid("user", "admin").required(),
 });
 
 const loginSchema = joi.object({
@@ -18,4 +19,13 @@ const loginSchema = joi.object({
     .required(),
 });
 
-module.exports = { registerSchema, loginSchema };
+const productSchema = joi.object({
+  title: joi.string().min(3).max(100).required(),
+  price: joi.number().positive().required(),
+  category: joi
+    .string()
+    .valid("men's clothing", "women's clothing", "jewelery", "electronics")
+    .required(),
+});
+
+module.exports = { registerSchema, loginSchema, productSchema };
