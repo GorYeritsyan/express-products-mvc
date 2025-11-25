@@ -10,12 +10,14 @@ const UserService = require("./services/UserService");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const AuthService = require("./services/AuthService");
 
 var app = express();
 
 app.locals.services = {
   products: new ProductService(),
   users: new UserService(),
+  auth: new AuthService(),
 };
 
 // view engine setup
