@@ -53,7 +53,6 @@ header ul {
   gap: 16px;
   margin-top: 20px;
   min-width: 360px;
-
 }
 
 .form .input-wrapper {
@@ -73,24 +72,24 @@ header ul {
   font-weight: 600;
 }
 .form button:hover {
-  background-color:#1f92eb ;
+  background-color: #1f92eb;
 }
 
-input, select {
+input,
+select {
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   outline: none;
 }
 
-
-
-input:focus, select:focus {
+input:focus,
+select:focus {
   border-color: #2098f4;
   outline: 1px solid #2098f4;
 }
 
-section .container{
+section .container {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -98,15 +97,99 @@ section .container{
   justify-content: center;
 }
 
-section .container ul{
+section .container ul {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-section .container ul li{
+section .container ul li {
   background-color: #fff;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  /* width: 100%; */
+  width: 600px;
+}
+
+section .container ul li p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+section .container ul li img {
+  border-radius: 4px;
+}
+
+.add-btn {
+  all: unset;
+  padding: 8px 12px;
+  background-color: #2098f4;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  /* margin-right: 12px; */
+}
+
+.add-btn:hover {
+  background-color: #1f92eb;
+}
+
+.edit-btn {
+  all: unset;
+  padding: 8px 12px;
+  /* background-color: #20eb6e; */
+  background-color: #15f3a2;
+  color: #212529;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  /* margin-right: 12px; */
+}
+
+.edit-btn:hover {
+  background-color: #14e99b;
+}
+
+.delete-btn {
+  all: unset;
+  padding: 8px 12px;
+  background-color: #f4283d;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delete-btn:hover {
+  background-color: #eb263a;
+}
+
+.btns {
+  margin-top: 12px;
+  gap: 12px;
+  display: flex;
+  
+}
+
+/* Products Header Styles */
+.products-header {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters-container {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  align-items: center;
 }

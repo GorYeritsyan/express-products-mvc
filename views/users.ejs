@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <%-include('header') %>
+    <section>
+      <div class="container">
+        <h1><%= title %></h1>
+
+        <header class="products-header">
+          <form action="/users" method="get" class="filters-container">
+            <input
+              type="text"
+              name="name"
+              id="search-title"
+              placeholder="Search by name..."
+            />
+
+            <input
+              type="text"
+              id="search-email"
+              name="email"
+              placeholder="Search by email..."
+            />
+
+            <button class="add-btn">Search</button>
+            <a href="/users" type="button" class="delete-btn">Clear</a>
+          </form>
+          <% if(isAdmin) { %>
+          <a class="add-btn" href="/users/add">+ Add User</a>
+          <% } %>
+        </header>
+
+        <% if(users.length === 0){ %>
+        <p>There is no registered users</p>
+        <% } %>
+
+        <ul>
+          <% users.forEach(user => { %>
+          <li>
+            <p>ID: <%=user.id%></p>
+            <p>Role: <%=user.role %></p>
+            <p>Name: <%= user.name %></p>
+            <p>Email: <%= user.email %></p>
+            <p>Password: <%=user.password %></p>
+            <div class="btns">
+              <% if(isAdmin) { %>
+              <a class="edit-btn" href="/users/<%=user.id%>">Edit</a>
+              <button
+                class="delete-btn"
+                id="<%=user.id %>"
+                data-action="delete-user"
+              >
+                Delete
+              </button>
+              <% } %>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+
+    <script src="/javascripts/index.js"></script>
+  </body>
+</html>

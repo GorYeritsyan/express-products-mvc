@@ -28,4 +28,13 @@ const productSchema = joi.object({
     .required(),
 });
 
-module.exports = { registerSchema, loginSchema, productSchema };
+const updateUserSchema = joi.object({
+  name: joi.string().min(3).max(30).required(),
+});
+
+module.exports = {
+  registerSchema,
+  loginSchema,
+  productSchema,
+  updateUserSchema,
+};

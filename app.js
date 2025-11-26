@@ -10,7 +10,7 @@ const AuthService = require("./services/AuthService");
 const CartService = require("./services/CartService");
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const cartRouter = require("./routes/cart");
 

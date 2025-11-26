@@ -10,47 +10,28 @@
       <div class="container">
         <h1><%= title %></h1>
 
-        <div class="form">
+        <form class="form" action="/" method="post">
           <div class="input-wrapper">
             <label for="title">Title</label>
-            <input
-              value="<%=product.title %>"
-              type="title"
-              id="title"
-              name="title"
-              required
-            />
+            <input type="text" id="title" name="title" required />
           </div>
           <div class="input-wrapper">
             <label for="price">Price</label>
-            <input
-              value="<%=product.price%>"
-              type="price"
-              id="price"
-              name="price"
-              required
-            />
+            <input type="number" id="price" name="price" required />
           </div>
           <div class="input-wrapper">
             <label for="category">Category</label>
             <!-- <input type="password" id="password" name="password" required /> -->
             <select name="category" id="category">
-              <option hidden value="<%=product.category %>">
-                <%=product.category %>
-              </option>
               <option value="men's clothing">men's clothing</option>
               <option value="jewelery">jewelery</option>
               <option value="electronics">electronics</option>
               <option value="women's clothing">women's clothing</option>
             </select>
           </div>
-          <button id="<%=product.id%>" data-action="edit-product" type="button">
-            Edit
-          </button>
-        </div>
+          <button type="submit">Add product</button>
+        </form>
       </div>
     </section>
-
-    <script src="/javascripts/index.js"></script>
   </body>
 </html>

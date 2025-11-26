@@ -10,6 +10,41 @@
       <div class="container">
         <h1><%= title %></h1>
 
+        <header class="products-header">
+          <form action="/" method="get" class="filters-container">
+            <input
+              type="text"
+              name="title"
+              id="search-title"
+              placeholder="Search by title..."
+            />
+
+            <input
+              type="number"
+              id="search-price"
+              name="price"
+              placeholder="Search by price..."
+            />
+            <select name="category" id="category-filter">
+              <option value="">All Categories</option>
+              <option value="electronics">Electronics</option>
+              <option value="jewelery">Jewelery</option>
+              <option value="men's clothing">Men's Clothing</option>
+              <option value="women's clothing">Women's Clothing</option>
+            </select>
+
+            <button class="add-btn">Search</button>
+            <a href="/" type="button" class="delete-btn">Clear</a>
+          </form>
+          <% if(isAdmin) { %>
+          <a class="add-btn" href="/add-product">+ Add Product</a>
+          <% } %>
+        </header>
+
+        <% if(products.length === 0){ %>
+        <p>No products available.</p>
+        <% } %>
+
         <ul>
           <% products.forEach(product => { %>
           <li>
@@ -17,16 +52,30 @@
             <p>Title: <%= product.title %></p>
             <p>Price: $<%= product.price %></p>
             <p>Category: <%=product.category %></p>
-            <p>
+            <!-- <p>
               <a href="/products/<%=product.id %>"
                 ><img width="60" src="<%=product.image %>" alt=""
               /></a>
-            </p>
-            <button id="<%=product.id%>" data-action="add-to-cart">
-              Add to cart
-            </button>
-            <a href="/products/edit/<%=product.id%>">Edit</a>
-            <button id="<%=product.id %>" data-action="delete">Delete</button>
+            </p> -->
+            <div class="btns">
+              <button
+                class="add-btn"
+                id="<%=product.id%>"
+                data-action="add-to-cart"
+              >
+                Add to cart
+              </button>
+              <% if(isAdmin) { %>
+              <a class="edit-btn" href="/products/edit/<%=product.id%>">Edit</a>
+              <button
+                class="delete-btn"
+                id="<%=product.id %>"
+                data-action="delete"
+              >
+                Delete
+              </button>
+              <% } %>
+            </div>
           </li>
           <% }) %>
         </ul>

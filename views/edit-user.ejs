@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <%-include('header') %>
+    <section>
+      <div class="container">
+        <h1><%= title %></h1>
+
+        <form class="form">
+          <div class="input-wrapper">
+            <label for="name">Name</label>
+            <input
+              value="<%=user.name%>"
+              type="text"
+              id="name"
+              name="name"
+              required
+            />
+          </div>
+          <button id="<%=user.id %>" data-action="update-user" type="button">
+            Edit User
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <script src="/javascripts/index.js"></script>
+  </body>
+</html>

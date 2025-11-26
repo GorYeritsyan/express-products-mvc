@@ -7,13 +7,17 @@ const procuctController = new ProductController();
 /* GET home page. Products list */
 router.get("/", procuctController.getAllProducts);
 
-router.get('/products/edit/:id', procuctController.getEditPage)
+router.post("/", procuctController.createProduct);
+
+router.get("/add-product", procuctController.getAddProductPage);
+// GET edit page for product by id
+router.get("/products/edit/:id", procuctController.getEditPage);
 
 // GET single product by id
 router.get("/products/:id", procuctController.getProductById);
 
 // UPDATE product by id
-router.patch('/products/:id', procuctController.updateProductById);
+router.patch("/products/:id", procuctController.updateProductById);
 
 // DELETE product by id
 router.delete("/:id", procuctController.deleteProductById);

@@ -4,10 +4,29 @@ class ProductController {
   // get all products
   async getAllProducts(req, res) {
     try {
-      const products = await req.app.locals.services.products.getAllProducts();
+      const products = await req.app.locals.services.products.getAllProducts(
+        req.query
+      );
       const authUser = await req.app.locals.services.auth.getMe();
 
-      res.render("index", { title: "Products", products, authUser });
+      const isAdmin = authUser?.role === "admin";
+
+      res.render("index", { title: "Products", products, authUser, isAdmin });
+    } catch (err) {
+      res.json({ message: err.message });
+    }
+  }
+
+  async getAddProductPage(req, res) {
+    const authUser = await req.app.locals.services.auth.getMe();
+    res.render("add-product", { title: "Add Product", authUser });
+  }
+
+  async createProduct(req, res) {
+    try {
+      const validProduct = await productSchema.validateAsync(req.body);
+      await req.app.locals.services.products.createProduct(validProduct);
+      res.redirect("/");
     } catch (err) {
       res.json({ message: err.message });
     }

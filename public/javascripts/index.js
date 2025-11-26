@@ -6,10 +6,9 @@ window.addEventListener("click", async (e) => {
       await fetch(`http://localhost:3000/${productId}`, {
         method: "DELETE",
       });
-
       window.location.reload();
     } catch (err) {
-      console.error("Error deleting product:", err);
+      alert("Error deleting product:", err);
     }
   }
 
@@ -25,7 +24,7 @@ window.addEventListener("click", async (e) => {
       });
       alert("Product added to cart!");
     } catch (err) {
-      console.error("Error adding product to cart:", err);
+      alert("Error adding product to cart:", err);
     }
   }
 
@@ -45,9 +44,10 @@ window.addEventListener("click", async (e) => {
         },
         body: JSON.stringify({ title, price, category }),
       });
+      alert(`Product with ID ${productId} updated successfully!`);
       window.location.href = "/";
     } catch (err) {
-      console.error("Error updating product:", err);
+      alert("Error updating product:", err);
     }
   }
 
@@ -60,7 +60,40 @@ window.addEventListener("click", async (e) => {
       });
       window.location.reload();
     } catch (err) {
-      console.error("Error removing item from cart:", err);
+      alert("Error removing item from cart:", err);
+    }
+  }
+
+  if (e.target.dataset.action === "update-user") {
+    const userId = e.target.id;
+    const name = document.getElementById("name").value;
+
+    try {
+      await fetch(`http://localhost:3000/users/${userId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      });
+      alert(`User with ID ${userId} updated successfully!`);
+      window.location.href = "/users";
+    } catch (err) {
+      alert("Error updating user:", err);
+    }
+  }
+
+  if (e.target.dataset.action === "delete-user") {
+    const userId = e.target.id;
+
+    try {
+      await fetch(`http://localhost:3000/users/${userId}`, {
+        method: "DELETE",
+      });
+      alert("User deleted successfully");
+      window.location.reload();
+    } catch (err) {
+      alert("Error deleting user:", err);
     }
   }
 });
