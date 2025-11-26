@@ -1,10 +1,20 @@
-const { updateUserSchema } = require("../validations/validations");
+const {
+  updateUserSchema,
+  registerSchema,
+} = require("../validations/validations");
 
 class UserController {
   async getAllUsers(req, res) {
-    const users = await req.app.locals.services.users.getAllUsers(req.query);
+    let users = await req.app.locals.services.users.getAllUsers(req.query);
     const authUser = await req.app.locals.services.auth.getMe();
     const isAdmin = authUser?.role === "admin";
+
+    // don't show self to admin
+    if (isAdmin) {
+      users = users.filter((user) => user.id !== authUser.id);
+    } else {
+      users = users.filter((user) => user.role === "user");
+    }
 
     res.render("users", { title: "Users", authUser, users, isAdmin });
   }
@@ -20,6 +30,16 @@ class UserController {
     const authUser = await req.app.locals.services.auth.getMe();
 
     res.render("edit-user", { title: "Edit User", authUser, user });
+  }
+
+  async createUser(req, res) {
+    try {
+      const newUser = await registerSchema.validateAsync(req.body);
+      await req.app.locals.services.users.createUser(newUser);
+      res.redirect("/users");
+    } catch (err) {
+      res.json({ message: err.message });
+    }
   }
 
   async updateUser(req, res) {

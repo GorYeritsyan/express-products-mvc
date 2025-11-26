@@ -12,6 +12,8 @@ router.get("/add", userController.getAddUserPage);
 
 router.get("/:id", userController.getUserEditPage);
 
+router.post('/', userController.createUser)
+
 // update user details
 router.patch("/:id", userController.updateUser);
 

@@ -52,12 +52,8 @@
             <p>Title: <%= product.title %></p>
             <p>Price: $<%= product.price %></p>
             <p>Category: <%=product.category %></p>
-            <!-- <p>
-              <a href="/products/<%=product.id %>"
-                ><img width="60" src="<%=product.image %>" alt=""
-              /></a>
-            </p> -->
             <div class="btns">
+              <a class="add-btn" href="/products/<%=product.id%>">Details</a>
               <button
                 class="add-btn"
                 id="<%=product.id%>"

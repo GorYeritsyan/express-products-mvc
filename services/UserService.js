@@ -1,7 +1,8 @@
 const MainService = require("./MainService");
+const bcrypt = require("bcryptjs");
 
 class UserService extends MainService {
-  async getAllUsers({ name, email }) {
+  async getAllUsers({ name, email, role }) {
     let users = await this.readDb("users");
 
     if (name) {
@@ -16,12 +17,27 @@ class UserService extends MainService {
       );
     }
 
+    if(role){
+      users = users.filter((user) => user.role === role);
+    }
+
     return users;
   }
 
   async getUserById(id) {
     const users = await this.readDb("users");
     return users.find((user) => user.id === id);
+  }
+
+  async createUser(newUser) {
+    const users = await this.readDb("users");
+
+    newUser.id = crypto.randomUUID();
+    newUser.password = await bcrypt.hash(newUser.password, 10);
+    delete newUser.confirm_password;
+
+    users.push(newUser);
+    await this.writeDb("users", users);
   }
 
   async updateUser({ id, updatedUser }) {

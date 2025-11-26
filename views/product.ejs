@@ -8,17 +8,26 @@
     <%-include('header') %>
     <section>
       <div class="container">
-        <h1><%= title %></h1>
-
-        <div>
+        <h1><%=title %></h1>
+        <div class="product-card">
+          <h1><%= product.title %></h1>
           <p>ID: <%=product.id%></p>
-          <p>Title: <%= product.title %></p>
-          <p>Price: <%= product.title %></p>
+          <p>Price: $<%= product.price %></p>
           <p>Category: <%=product.category %></p>
-          <p><img width="60" src="<%=product.image %>" alt="" /></p>
-          <button>Add to cart</button>
+          <div class="btns">
+            <button
+              class="add-btn"
+              id="<%=product.id%>"
+              data-action="add-to-cart"
+            >
+              Add to cart
+            </button>
+            <a href="/" class="back-btn">Back to Products</a>
+          </div>
         </div>
       </div>
     </section>
+
+    <script src="/javascripts/index.js"></script>
   </body>
 </html>

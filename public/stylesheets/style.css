@@ -193,3 +193,53 @@ section .container ul li img {
   flex: 1;
   align-items: center;
 }
+/* Details Button */
+.details-btn {
+  all: unset;
+  padding: 8px 12px;
+  background-color: #2196F3;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.details-btn:hover {
+  background-color: #0b7dda;
+}
+
+/* Product Card/Detail Styles */
+.product-card {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 600px;
+  margin-top: 20px;
+}
+
+.product-card h1 {
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+
+.product-card p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.back-btn {
+  all: unset;
+  padding: 8px 12px;
+  background-color: #666;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #555;
+}
