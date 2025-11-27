@@ -17,7 +17,7 @@ class ProductController {
     }
   }
 
-  async getAddProductPage(req, res) {
+  async getProductAddPage(req, res) {
     const authUser = await req.app.locals.services.auth.getMe();
     res.render("add-product", { title: "Add Product", authUser });
   }
@@ -76,6 +76,9 @@ class ProductController {
         id,
         validProduct,
       });
+
+      // update cart item by id
+      await req.app.locals.services.cart.updateCartItem(id);
       res.json({ message: `Product with id ${id} updated successfully` });
     } catch (err) {
       res.json({ message: err.message });

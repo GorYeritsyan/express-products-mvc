@@ -28,6 +28,26 @@ class CartService extends MainService {
     await this.writeDb("cart", cart);
   }
 
+  async updateCartItem(productId) {
+    const products = await this.readDb("products");
+    const cartItems = await this.readDb("cart");
+    const cartItemIndex = cartItems.findIndex((item) => item.id === productId);
+
+    if (cartItemIndex !== -1) {
+      const updatedProduct = products.find(
+        (product) => product.id === productId
+      );
+      cartItems[cartItemIndex] = {
+        ...cartItems[cartItemIndex],
+        ...updatedProduct,
+      };
+
+      console.log("CART", cartItems[cartItemIndex]);
+
+      await this.writeDb("cart", cartItems);
+    }
+  }
+
   async removeFromCart(productId) {
     const cart = await this.readDb("cart");
     const updatedCart = cart.filter((item) => item.id !== productId);

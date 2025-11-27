@@ -4,6 +4,7 @@ const {
 } = require("../validations/validations");
 
 class UserController {
+  // Get All Users filtered by query params
   async getAllUsers(req, res) {
     let users = await req.app.locals.services.users.getAllUsers(req.query);
     const authUser = await req.app.locals.services.auth.getMe();
@@ -19,11 +20,13 @@ class UserController {
     res.render("users", { title: "Users", authUser, users, isAdmin });
   }
 
-  async getAddUserPage(req, res) {
+  // Get User Add page
+  async getUserAddPage(req, res) {
     const authUser = await req.app.locals.services.auth.getMe();
     res.render("add-user", { title: "Add User", authUser });
   }
 
+  // Get User edit page
   async getUserEditPage(req, res) {
     const { id } = req.params;
     const user = await req.app.locals.services.users.getUserById(id);
@@ -32,6 +35,7 @@ class UserController {
     res.render("edit-user", { title: "Edit User", authUser, user });
   }
 
+  // Create User
   async createUser(req, res) {
     try {
       const newUser = await registerSchema.validateAsync(req.body);
@@ -42,6 +46,7 @@ class UserController {
     }
   }
 
+  // Update User
   async updateUser(req, res) {
     const { id } = req.params;
     const { body } = req;
@@ -56,6 +61,7 @@ class UserController {
     }
   }
 
+  // Delete User
   async deleteUser(req, res) {
     const { id } = req.params;
     try {

@@ -7,9 +7,11 @@ const procuctController = new ProductController();
 /* GET home page. Products list */
 router.get("/", procuctController.getAllProducts);
 
+// Create new product
 router.post("/", procuctController.createProduct);
 
-router.get("/add-product", procuctController.getAddProductPage);
+// get product add page
+router.get("/add-product", procuctController.getProductAddPage);
 // GET edit page for product by id
 router.get("/products/edit/:id", procuctController.getEditPage);
 

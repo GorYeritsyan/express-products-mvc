@@ -8,11 +8,13 @@ const userController = new UserController();
 router.get("/", userController.getAllUsers);
 
 // get add user form
-router.get("/add", userController.getAddUserPage);
+router.get("/add", userController.getUserAddPage);
 
+// get user edit page
 router.get("/:id", userController.getUserEditPage);
 
-router.post('/', userController.createUser)
+// post, create new user
+router.post("/", userController.createUser);
 
 // update user details
 router.patch("/:id", userController.updateUser);
