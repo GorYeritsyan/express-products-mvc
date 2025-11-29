@@ -10,13 +10,6 @@ class UserController {
     const authUser = await req.app.locals.services.auth.getMe();
     const isAdmin = authUser?.role === "admin";
 
-    // don't show self to admin
-    if (isAdmin) {
-      users = users.filter((user) => user.id !== authUser.id);
-    } else {
-      users = users.filter((user) => user.role === "user");
-    }
-
     res.render("users", { title: "Users", authUser, users, isAdmin });
   }
 
