@@ -11,13 +11,13 @@
         <h1><%=title %></h1>
         <div class="product-card">
           <h1><%= product.title %></h1>
-          <p>ID: <%=product.id%></p>
+          <p>ID: <%=product._id%></p>
           <p>Price: $<%= product.price %></p>
           <p>Category: <%=product.category %></p>
           <div class="btns">
             <button
               class="add-btn"
-              id="<%=product.id%>"
+              id="<%=product._id%>"
               data-action="add-to-cart"
             >
               Add to cart

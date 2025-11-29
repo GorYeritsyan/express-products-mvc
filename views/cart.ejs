@@ -17,7 +17,7 @@
         <ul>
           <% cartItems.forEach(item => { %>
           <li>
-            <p>Product ID: <%=item.id%></p>
+            <p>Product ID: <%=item._id%></p>
             <p>Title: <%= item.title %></p>
             <p>Price: $<%= item.price*item.count %></p>
             <p>Category: <%= item.category %></p>
@@ -25,7 +25,7 @@
 
             <button
               class="delete-btn"
-              id="<%=item.id %>"
+              id="<%=item._id %>"
               data-action="remove-from-cart"
             >
               Remove

@@ -1,7 +1,13 @@
 const fs = require("fs").promises;
 const path = require("path");
+const { getDB } = require("../db");
 
 class MainService {
+  getCollection(collection) {
+    const db = getDB();
+    return db.collection(collection);
+  }
+
   async readDb(fileName) {
     return JSON.parse(
       await fs.readFile(
@@ -17,7 +23,6 @@ class MainService {
       JSON.stringify(data, null, 2)
     );
   }
-  
 }
 
 module.exports = MainService;

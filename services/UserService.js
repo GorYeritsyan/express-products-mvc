@@ -1,61 +1,59 @@
+const { ObjectId } = require("mongodb");
 const MainService = require("./MainService");
 const bcrypt = require("bcryptjs");
 
 class UserService extends MainService {
   async getAllUsers({ name, email, role }) {
-    let users = await this.readDb("users");
+    const usersCollection = this.getCollection("users");
+    let users = await usersCollection.find().toArray();
 
     if (name) {
-      users = users.filter((user) =>
-        user.name.toLowerCase().includes(name.toLowerCase())
-      );
+      users = await usersCollection
+        .find({
+          name: { $regex: name, $options: "i" },
+        })
+        .toArray();
     }
 
     if (email) {
-      users = users.filter((user) =>
-        user.email.toLowerCase().includes(email.toLowerCase())
-      );
+      users = await usersCollection
+        .find({
+          email: { $regex: email, $options: "i" },
+        })
+        .toArray();
     }
 
-    if(role){
-      users = users.filter((user) => user.role === role);
+    if (role) {
+      users = await usersCollection.find({ role }).toArray();
     }
 
     return users;
   }
 
   async getUserById(id) {
-    const users = await this.readDb("users");
-    return users.find((user) => user.id === id);
+    const users = this.getCollection("users");
+    return await users.findOne({ _id: new ObjectId(id) });
   }
 
   async createUser(newUser) {
-    const users = await this.readDb("users");
+    const users = this.getCollection("users");
 
-    newUser.id = crypto.randomUUID();
     newUser.password = await bcrypt.hash(newUser.password, 10);
     delete newUser.confirm_password;
 
-    users.push(newUser);
-    await this.writeDb("users", users);
+    await users.insertOne(newUser);
   }
 
   async updateUser({ id, updatedUser }) {
-    const users = await this.readDb("users");
-    const userIndex = users.findIndex((user) => user.id === id);
-
-    if (userIndex === -1) {
-      throw new Error(`User with ID ${id} not found`);
-    }
-
-    users[userIndex] = { ...users[userIndex], ...updatedUser };
-    await this.writeDb("users", users);
+    const users = this.getCollection("users");
+    console.log('UPDATED',updatedUser);
+    
+    await users.updateOne({ _id: new ObjectId(id) }, { $set: updatedUser });
   }
 
   async deleteUser(id) {
-    const users = await this.readDb("users");
-    const filteredUsers = users.filter((user) => user.id !== id);
-    await this.writeDb("users", filteredUsers);
+    const users = this.getCollection("users");
+    await users.deleteOne({ _id: new ObjectId(id) });
   }
 }
 
