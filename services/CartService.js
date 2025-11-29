@@ -1,57 +1,60 @@
+const { ObjectId } = require("mongodb");
 const MainService = require("./MainService");
 
 class CartService extends MainService {
   async getCartItems() {
-    return await this.readDb("cart");
+    return await this.getCollection("cart").find().toArray();
   }
 
   async addToCart(productId) {
-    const products = await this.readDb("products");
-    const cart = await this.readDb("cart");
+    const products = this.getCollection("products");
+    const cartCollection = this.getCollection("cart");
+    const product = await products.findOne({ _id: new ObjectId(productId) });
 
-    const product = products.find((p) => p.id === productId);
-    if (!product) {
-      throw new Error("Product not found");
+    const cartItem = await cartCollection.findOne({
+      _id: new ObjectId(productId),
+    });
+
+    // increment count field
+    if (cartItem) {
+      await cartCollection.updateOne(
+        { _id: new ObjectId(productId) },
+        { $inc: { count: 1 } }
+      );
     }
 
-    const cartItemIndex = cart.findIndex((item) => item.id === productId);
-
-    if (cartItemIndex !== -1) {
-      cart[cartItemIndex].count++;
-      await this.writeDb("cart", cart);
-      return;
-    }
-
+    // set count field
     product.count = 1;
+    await cartCollection.insertOne(product);
 
-    cart.push(product);
-    await this.writeDb("cart", cart);
+    // insert product to cart
+    await cartCollection.insertOne(product);
   }
 
   async updateCartItem(productId) {
-    const products = await this.readDb("products");
-    const cartItems = await this.readDb("cart");
-    const cartItemIndex = cartItems.findIndex((item) => item.id === productId);
+    const cartCollection = this.getCollection("cart");
+    const products = this.getCollection("products");
 
-    if (cartItemIndex !== -1) {
-      const updatedProduct = products.find(
-        (product) => product.id === productId
+    const cartItem = await cartCollection.findOne({
+      _id: new ObjectId(productId),
+    });
+
+    if (cartItem) {
+      const updatedProduct = await products.findOne({
+        _id: new ObjectId(productId),
+      });
+
+      await cartCollection.updateOne(
+        { _id: new ObjectId(productId) },
+        { $set: updatedProduct }
       );
-      cartItems[cartItemIndex] = {
-        ...cartItems[cartItemIndex],
-        ...updatedProduct,
-      };
-
-      console.log("CART", cartItems[cartItemIndex]);
-
-      await this.writeDb("cart", cartItems);
     }
   }
 
   async removeFromCart(productId) {
-    const cart = await this.readDb("cart");
-    const updatedCart = cart.filter((item) => item.id !== productId);
-    await this.writeDb("cart", updatedCart);
+    await this.getCollection("cart").deleteOne({
+      _id: new ObjectId(productId),
+    });
   }
 }
 

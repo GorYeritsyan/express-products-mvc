@@ -1,65 +1,47 @@
+const { ObjectId } = require("mongodb");
 const MainService = require("./MainService");
 
 class ProductService extends MainService {
   async getAllProducts({ title, price, category }) {
     // Logic to get all products
-    let products = await this.readDb("products");
+    const productsCollection = this.getCollection("products");
+    let products = await productsCollection.find().toArray();
 
     if (title) {
-      products = products.filter((product) =>
-        product.title.toLowerCase().includes(title.toLowerCase())
-      );
+      products = await productsCollection.find({
+        title: { $regex: title, $options: "i" },
+      }).toArray();
     }
 
     if (price) {
-      products = products.filter((product) => product.price === Number(price));
+      products = await productsCollection.find({ price }).toArray();
     }
 
     if (category) {
-      products = products.filter(
-        (product) => product.category.toLowerCase() === category.toLowerCase()
-      );
+      products = await productsCollection.find({ category }).toArray();
     }
 
     return products;
   }
 
   async createProduct(validProduct) {
-    const products = await this.readDb("products");
-    const newProduct = {
-      id: crypto.randomUUID(),
-      ...validProduct,
-    };
-    products.push(newProduct);
-    await this.writeDb("products", products);
+    const products = this.getCollection("products");
+    await products.insertOne(validProduct);
   }
 
   async getProductById(id) {
-    // Logic to get a product by ID
-    const products = await this.readDb("products");
-    return products.find((product) => product.id === id);
+    return await this.getCollection("products").findOne({
+      _id: new ObjectId(id),
+    });
   }
 
   async updateProductById({ id, validProduct }) {
-    const products = await this.readDb("products");
-    const productIndex = products.findIndex((product) => product.id === id);
-
-    if (productIndex === -1) {
-      throw new Error("Product not found");
-    }
-
-    products[productIndex] = { ...products[productIndex], ...validProduct };
-    // update the database
-    await this.writeDb("products", products);
+    const products = this.getCollection("products");
+    await products.updateOne({ _id: new ObjectId(id) }, { $set: validProduct });
   }
 
   async deleteProductById(id) {
-    // Logic to delete a product by ID
-    const products = await this.readDb("products");
-    const filteredProducts = products.filter((product) => product.id !== id);
-
-    // update the database
-    await this.writeDb("products", filteredProducts);
+    await this.getCollection("products").deleteOne({ _id: new ObjectId(id) });
   }
 }
 
