@@ -4,14 +4,19 @@ class ProductController {
   // get all products
   async getAllProducts(req, res) {
     try {
-      const products = await req.app.locals.services.products.getAllProducts(
-        req.query
-      );
+      const { products, pagination } =
+        await req.app.locals.services.products.getAllProducts(req.query);
       const authUser = await req.app.locals.services.auth.getMe();
 
       const isAdmin = authUser?.role === "admin";
 
-      res.render("index", { title: "Products", products, authUser, isAdmin });
+      res.render("index", {
+        title: "Products",
+        products,
+        authUser,
+        isAdmin,
+        pagination
+      });
     } catch (err) {
       res.json({ message: err.message });
     }

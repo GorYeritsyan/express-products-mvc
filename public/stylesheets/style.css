@@ -170,7 +170,6 @@ section .container ul li img {
   margin-top: 12px;
   gap: 12px;
   display: flex;
-  
 }
 
 /* Products Header Styles */
@@ -197,7 +196,7 @@ section .container ul li img {
 .details-btn {
   all: unset;
   padding: 8px 12px;
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: #fff;
   border-radius: 4px;
   cursor: pointer;
@@ -242,4 +241,25 @@ section .container ul li img {
 
 .back-btn:hover {
   background-color: #555;
+}
+
+.pagination-btn {
+  all: unset;
+  padding: 8px 12px;
+  background-color: transparent;
+  color: #2098f4;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.pagination-btn:hover {
+  color: #1f92eb;
+  background-color: #ededed;
+}
+
+.pagination-wrapper {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
 }

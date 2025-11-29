@@ -3,7 +3,7 @@ const MainService = require("./MainService");
 const bcrypt = require("bcryptjs");
 
 class UserService extends MainService {
-  async getAllUsers({ name, email, role }) {
+  async getAllUsers({ name, email, role, page = 1, limit = 2 }) {
     const usersCollection = this.getCollection("users");
     let users = await usersCollection.find().toArray();
 
@@ -27,7 +27,17 @@ class UserService extends MainService {
       users = await usersCollection.find({ role }).toArray();
     }
 
-    return users;
+    users = await usersCollection
+      .find()
+      .skip((Number(page) - 1) * Number(limit))
+      .limit(Number(limit)).toArray();
+
+    const pagination = {
+      totalPages: Math.ceil((await usersCollection.find().count()) / Number(limit)),
+      currentPage: Number(page),
+    };
+
+    return { users, pagination };
   }
 
   async getUserById(id) {
@@ -46,8 +56,8 @@ class UserService extends MainService {
 
   async updateUser({ id, updatedUser }) {
     const users = this.getCollection("users");
-    console.log('UPDATED',updatedUser);
-    
+    console.log("UPDATED", updatedUser);
+
     await users.updateOne({ _id: new ObjectId(id) }, { $set: updatedUser });
   }
 

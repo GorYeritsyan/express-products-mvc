@@ -2,15 +2,17 @@ const { ObjectId } = require("mongodb");
 const MainService = require("./MainService");
 
 class ProductService extends MainService {
-  async getAllProducts({ title, price, category }) {
+  async getAllProducts({ title, price, category, page = 1, limit = 2 }) {
     // Logic to get all products
     const productsCollection = this.getCollection("products");
     let products = await productsCollection.find().toArray();
 
     if (title) {
-      products = await productsCollection.find({
-        title: { $regex: title, $options: "i" },
-      }).toArray();
+      products = await productsCollection
+        .find({
+          title: { $regex: title, $options: "i" },
+        })
+        .toArray();
     }
 
     if (price) {
@@ -21,7 +23,20 @@ class ProductService extends MainService {
       products = await productsCollection.find({ category }).toArray();
     }
 
-    return products;
+    products = await productsCollection
+      .find()
+      .skip((Number(page) - 1) * Number(limit))
+      .limit(Number(limit))
+      .toArray();
+
+    const pagination = {
+      totalPages: Math.ceil(
+        (await productsCollection.find().count()) / Number(limit)
+      ),
+      currentPage: Number(page),
+    };
+
+    return { products, pagination };
   }
 
   async createProduct(validProduct) {

@@ -6,11 +6,19 @@ const {
 class UserController {
   // Get All Users filtered by query params
   async getAllUsers(req, res) {
-    let users = await req.app.locals.services.users.getAllUsers(req.query);
+    let { users, pagination } = await req.app.locals.services.users.getAllUsers(
+      req.query
+    );
     const authUser = await req.app.locals.services.auth.getMe();
     const isAdmin = authUser?.role === "admin";
 
-    res.render("users", { title: "Users", authUser, users, isAdmin });
+    res.render("users", {
+      title: "Users",
+      authUser,
+      users,
+      isAdmin,
+      pagination,
+    });
   }
 
   // Get User Add page
