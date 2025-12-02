@@ -13,7 +13,7 @@ var indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const cartRouter = require("./routes/cart");
-const { connectToDB, getDB } = require("./db");
+const { connectToDB } = require("./db");
 const MainService = require("./services/MainService");
 
 var app = express();

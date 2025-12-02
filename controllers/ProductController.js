@@ -15,7 +15,7 @@ class ProductController {
         products,
         authUser,
         isAdmin,
-        pagination
+        pagination,
       });
     } catch (err) {
       res.json({ message: err.message });

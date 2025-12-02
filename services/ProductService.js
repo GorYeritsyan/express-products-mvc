@@ -5,33 +5,30 @@ class ProductService extends MainService {
   async getAllProducts({ title, price, category, page = 1, limit = 2 }) {
     // Logic to get all products
     const productsCollection = this.getCollection("products");
-    let products = await productsCollection.find().toArray();
+
+    const query = {};
 
     if (title) {
-      products = await productsCollection
-        .find({
-          title: { $regex: title, $options: "i" },
-        })
-        .toArray();
+      query.title = { $regex: title, $options: "i" };
     }
 
     if (price) {
-      products = await productsCollection.find({ price }).toArray();
+      query.price = Number(price);
     }
 
     if (category) {
-      products = await productsCollection.find({ category }).toArray();
+      query.category = { $regex: category, $options: "i" };
     }
 
-    products = await productsCollection
-      .find()
+    let products = await productsCollection
+      .find(query)
       .skip((Number(page) - 1) * Number(limit))
       .limit(Number(limit))
       .toArray();
 
     const pagination = {
       totalPages: Math.ceil(
-        (await productsCollection.find().count()) / Number(limit)
+        (await productsCollection.find(query).count()) / Number(limit)
       ),
       currentPage: Number(page),
     };
